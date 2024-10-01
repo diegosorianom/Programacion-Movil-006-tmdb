@@ -25,15 +25,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    // Constante para el log, TAG es el nombre de la clase
     private static final String TAG = "MainActivity";
+
+    // API KEY para la API de TMDB
     private static final String API_KEY = "APIKEY";
+
+    // Referencia a la interfaz MoviesAPI, lo llamaremos API
     private MoviesAPI api;
+
+    // Referencia al cuadro de texto en el que mostraremos los resultados
     private TextView textViewResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // Pantalla en la que mostraremos nuestros resultados
 
         api = RetrofitClient.getInstance();
 
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonSearchMovies = findViewById(R.id.boton2);
         Button buttonMovieDetails = findViewById(R.id.boton3);
 
+        // Funcion para cargar las peliculas populares
         buttonPopularMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Funcion para buscar peliculas
         buttonSearchMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Funcion para mostrar los detalles de una pelicula
         buttonMovieDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /*
+    Funcón para cargar todas las películas
+    Envía una llamada HTTP GET con Retrofit para obtener todas las películas populares con su
+    respectivo título y su ID. El resultado se almacena en la variable response. Si la respuesta
+    es exitosa se muestra un mensaje con la lista de títulos de peliculas y se guardan en un
+    StringBuilder para mostrar en el TextView. Si la respuesta no es exitosa se muestra un mensaje
+    con el código de error. Si la llamada falla se muestra un mensaje con el error.
+     */
     private void loadMovies() {
         Call<MovieResponse> call = api.getPopularMovies(API_KEY, "es-Es", 1);
         call.enqueue(new Callback<MovieResponse>() {
@@ -90,6 +109,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    Función para mostrar todas las películas que contienen en su titulo una palabra clave
+    Envía una llamada HTTP GET con Retrofit para obtener todas las películas que contienen
+    en su título la palabra clave pasada como parámetro. El resultado se almacena en la
+    variable response. Si la respuesta es exitosa se muestra un mensaje con la lista de
+    títulos de peliculas y se guardan en un StringBuilder para mostrar en el TextView.
+    Si la respuesta no es exitosa se muestra un mensaje con el código de error. Si la
+    llamada falla se muestra un mensaje con el error.
+     */
     private void searchMovie(String query) {
         Call<MovieResponse> call = api.searchMovie(API_KEY, "es-ES", query, 1);
         call.enqueue(new Callback<MovieResponse>() {
@@ -115,6 +143,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*
+    Comentario de la función para mostrar los detalles de la pelicula con un id concreto.
+    La función hace una llamada HTTP GET con Retrofit para obtener los detalles de una
+    película con un id concreto. El resultado se almacena en la variable response.
+    Si la respuesta es exitosa se muestra un mensaje con la descripción de la película
+    y se guardan en un String para mostrar en el TextView. Si la respuesta no es
+    exitosa se muestra un mensaje con el código de error. Si la llamada falla se
+    muestra un mensaje con el error.
+     */
     private void getMovieDetails(int movieId) {
         Call<Movie> call = api.getMovieDetails(movieId, API_KEY, "es-ES");
         call.enqueue(new Callback<Movie>() {
