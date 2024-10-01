@@ -9,20 +9,27 @@
         android:id="@+id/boton1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Botón 1" />
+        android:text="Peliculas populares" />
 
     <Button
         android:id="@+id/boton2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Botón 2"
+        android:text="Buscar pelicula"
         android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/boton3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Botón 3"
+        android:text="Detalles de pelicula"
         android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textViewResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:paddingTop="16dp" />
 
 </LinearLayout>
